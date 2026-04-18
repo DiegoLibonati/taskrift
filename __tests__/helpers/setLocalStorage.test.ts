@@ -5,33 +5,33 @@ describe("setLocalStorage", () => {
     localStorage.clear();
   });
 
-  afterEach(() => {
-    localStorage.clear();
-  });
+  describe("when storing values", () => {
+    it("should store a string as JSON", () => {
+      setLocalStorage("key", "value");
+      expect(localStorage.getItem("key")).toBe(JSON.stringify("value"));
+    });
 
-  it("should store data in localStorage as JSON", () => {
-    const testData = { name: "test", value: 123 };
+    it("should store an array as JSON", () => {
+      const data = [1, 2, 3];
+      setLocalStorage("key", data);
+      expect(localStorage.getItem("key")).toBe(JSON.stringify(data));
+    });
 
-    setLocalStorage("test-key", testData);
+    it("should store an object as JSON", () => {
+      const data = { id: "1", text: "test" };
+      setLocalStorage("key", data);
+      expect(localStorage.getItem("key")).toBe(JSON.stringify(data));
+    });
 
-    const stored = localStorage.getItem("test-key");
-    expect(stored).toBe(JSON.stringify(testData));
-  });
+    it("should store null as JSON", () => {
+      setLocalStorage("key", null);
+      expect(localStorage.getItem("key")).toBe(JSON.stringify(null));
+    });
 
-  it("should store arrays in localStorage", () => {
-    const testArray = [1, 2, 3, 4, 5];
-
-    setLocalStorage("test-array", testArray);
-
-    const stored = localStorage.getItem("test-array");
-    expect(stored).toBe(JSON.stringify(testArray));
-  });
-
-  it("should overwrite existing data", () => {
-    setLocalStorage("test-key", "first");
-    setLocalStorage("test-key", "second");
-
-    const stored = localStorage.getItem("test-key");
-    expect(stored).toBe(JSON.stringify("second"));
+    it("should overwrite an existing value", () => {
+      setLocalStorage("key", "first");
+      setLocalStorage("key", "second");
+      expect(localStorage.getItem("key")).toBe(JSON.stringify("second"));
+    });
   });
 });

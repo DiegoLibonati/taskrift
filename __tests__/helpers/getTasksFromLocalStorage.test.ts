@@ -1,36 +1,56 @@
+import type { Task } from "@/types/app";
+
 import { getTasksFromLocalStorage } from "@/helpers/getTasksFromLocalStorage";
 
-import { mockLocalStorage } from "@tests/__mocks__/localStorage.mock";
 import { mockTasks } from "@tests/__mocks__/tasks.mock";
 
 describe("getTasksFromLocalStorage", () => {
   beforeEach(() => {
-    mockLocalStorage.clear();
+    localStorage.clear();
   });
 
-  afterEach(() => {
-    mockLocalStorage.clear();
+  describe("when localStorage has no tasks", () => {
+    it("should return an empty array", () => {
+      expect(getTasksFromLocalStorage()).toEqual([]);
+    });
   });
 
-  it("should return tasks from localStorage", () => {
-    mockLocalStorage.setItem("tasks", JSON.stringify(mockTasks));
+  describe("when localStorage has tasks", () => {
+    it("should return the parsed tasks array", () => {
+      localStorage.setItem("tasks", JSON.stringify(mockTasks));
+      expect(getTasksFromLocalStorage()).toEqual(mockTasks);
+    });
 
-    const result = getTasksFromLocalStorage();
+    it("should return a single task correctly", () => {
+      const tasks: Task[] = [
+        { id: "1", category: "tasks", text: "Test task", complete: false },
+      ];
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      const result = getTasksFromLocalStorage();
+      expect(result).toHaveLength(1);
+      expect(result[0]).toMatchObject({
+        id: "1",
+        category: "tasks",
+        text: "Test task",
+        complete: false,
+      });
+    });
 
-    expect(result).toEqual(mockTasks);
-  });
+    it("should return completed tasks correctly", () => {
+      const tasks: Task[] = [
+        { id: "2", category: "finish", text: "Done", complete: true },
+      ];
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      const result = getTasksFromLocalStorage();
+      expect(result[0]!.complete).toBe(true);
+    });
 
-  it("should return empty array when no tasks in localStorage", () => {
-    const result = getTasksFromLocalStorage();
-
-    expect(result).toEqual([]);
-  });
-
-  it("should return empty array when localStorage has null", () => {
-    mockLocalStorage.setItem("tasks", "null");
-
-    const result = getTasksFromLocalStorage();
-
-    expect(result).toEqual([]);
+    it("should return all tasks from different categories", () => {
+      localStorage.setItem("tasks", JSON.stringify(mockTasks));
+      const result = getTasksFromLocalStorage();
+      expect(result).toHaveLength(2);
+      expect(result[0]!.category).toBe("tasks");
+      expect(result[1]!.category).toBe("progress");
+    });
   });
 });

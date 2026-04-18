@@ -1,7 +1,7 @@
 {
-  "name": "ToDo",
-  "short_name": "ToDo",
-  "description": "I made a web page that works like JIRA. It is a page where we can upload tasks to do, that are in progress or that are done. In addition we can delete all the tasks of each category separately, we can drag and drop the tasks from one category to another with drag and drop. Also by clicking with the wheel we can cross out the task and with the right click we can delete it from the dashboard.",
+  "name": "Taskrift",
+  "short_name": "Taskrift",
+  "description": "Taskrift is a Kanban-style task management web application built with vanilla TypeScript and no frameworks.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -6,11 +6,11 @@ import Task from "@/components/Task/Task";
 
 import { getTasksFromLocalStorage } from "@/helpers/getTasksFromLocalStorage";
 
-import "@/pages/ToDoPage/ToDoPage.css";
+import "@/pages/TaskriftPage/TaskriftPage.css";
 
-const ToDoPage = (): Page => {
+const TaskriftPage = (): Page => {
   const main = document.createElement("main") as Page;
-  main.className = "todo-page";
+  main.className = "taskrift-page";
 
   main.innerHTML = `
     <section class="menus"></section>
@@ -57,4 +57,4 @@ const ToDoPage = (): Page => {
   return main;
 };
 
-export default ToDoPage;
+export default TaskriftPage;

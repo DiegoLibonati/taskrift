@@ -1,4 +1,4 @@
-# ToDo Page
+# Taskrift
 
 ## Educational Purpose
 
@@ -17,7 +17,20 @@ The application will open automatically at `http://localhost:3000`
 
 ## Description
 
-I made a web page that works like JIRA. It is a page where we can upload tasks to do, that are in progress or that are done. In addition we can delete all the tasks of each category separately, we can drag and drop the tasks from one category to another with drag and drop. Also by clicking with the wheel we can cross out the task and with the right click we can delete it from the dashboard.
+**Taskrift** is a Kanban-style task management web application built with vanilla TypeScript and no frameworks. It organizes work into three columns — **Tasks To Do**, **In Progress**, and **Finish** — giving you a clear visual overview of everything on your plate at any moment.
+
+Tasks are created by typing into the input field of any column and submitting the form. Each task is saved immediately to `localStorage`, so your board persists across page reloads without any backend or account required.
+
+Once a task exists, you have full control over it through a set of mouse interactions designed to minimize clicks:
+
+- **Drag and drop** a task from one column to another to update its status. The category change is reflected in `localStorage` instantly.
+- **Middle-click** (or left-click on mobile screens) to toggle a strikethrough on the task, marking it as visually complete without removing it from the board.
+- **Right-click** on a task to delete it immediately from the board and from storage.
+- **Click the delete button** (trash icon) on the task card to remove it explicitly.
+
+Each column also has a settings panel with a **Clear All Tasks** action that removes every task in that column at once, both from the DOM and from `localStorage`, leaving tasks in other columns untouched.
+
+The application is entirely client-side, requires no login, and stores all data locally in the browser. It is built as a single-page application (SPA) using Vite as the build tool, TypeScript for type safety, and a component-based architecture where each UI piece is a plain factory function that returns a typed `HTMLElement`.
 
 ## Technologies used
 
@@ -60,11 +73,7 @@ I made a web page that works like JIRA. It is a page where we can upload tasks t
 
 ## Portfolio Link
 
-[`https://www.diegolibonati.com.ar/#/project/ToDo-Page`](https://www.diegolibonati.com.ar/#/project/ToDo-Page)
-
-## Video
-
-https://user-images.githubusercontent.com/99032604/199377059-5a00ae00-f9a7-487b-bde3-73fd8b6b0328.mp4
+[`https://www.diegolibonati.com.ar/#/project/taskrift`](https://www.diegolibonati.com.ar/#/project/taskrift)
 
 ## Testing
 
