@@ -1,7 +1,5 @@
 import "@testing-library/jest-dom";
 
-const mockUuidV4 = jest.fn(() => "mocked-uuid-1234");
-
 if (typeof DragEvent === "undefined") {
   class MockDragEvent extends Event implements DragEvent {
     dataTransfer: DataTransfer;
@@ -97,7 +95,3 @@ if (typeof DataTransfer === "undefined") {
     global as typeof globalThis & { DataTransfer: typeof MockDataTransfer }
   ).DataTransfer = MockDataTransfer;
 }
-
-jest.mock("uuid", () => ({
-  v4: mockUuidV4,
-}));

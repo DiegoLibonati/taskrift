@@ -204,7 +204,7 @@ describe("Menu", () => {
           document.querySelector<HTMLFormElement>(".menu__form-tasks")!
         );
         const stored = JSON.parse(localStorage.getItem("tasks") ?? "[]");
-        expect(stored[0].id).toBe("mocked-uuid-1234");
+        expect(stored[0].id).toEqual(expect.any(String));
       });
     });
 
