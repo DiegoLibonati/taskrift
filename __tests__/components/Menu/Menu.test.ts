@@ -81,7 +81,7 @@ describe("Menu", () => {
     it("should use the provided id for dynamic class names", () => {
       renderComponent({ id: "progress", title: "IN PROGRESS" });
       expect(
-        document.querySelector(".menu__note-list-progress")
+        document.querySelector<HTMLUListElement>(".menu__note-list-progress")
       ).toBeInTheDocument();
     });
   });
@@ -95,9 +95,9 @@ describe("Menu", () => {
           name: "Open tasks settings",
         });
         await user.click(openBtn);
-        expect(document.querySelector(".menu__config-tasks")).toHaveClass(
-          "menu__config--open"
-        );
+        expect(
+          document.querySelector<HTMLDivElement>(".menu__config-tasks")
+        ).toHaveClass("menu__config--open");
       });
 
       it("should close config when close button is clicked after opening", async () => {
@@ -111,9 +111,9 @@ describe("Menu", () => {
         });
         await user.click(openBtn);
         await user.click(closeBtn);
-        expect(document.querySelector(".menu__config-tasks")).not.toHaveClass(
-          "menu__config--open"
-        );
+        expect(
+          document.querySelector<HTMLDivElement>(".menu__config-tasks")
+        ).not.toHaveClass("menu__config--open");
       });
     });
 

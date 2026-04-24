@@ -24,7 +24,7 @@ describe("TaskriftPage", () => {
   describe("rendering", () => {
     it("should create a main element", () => {
       renderPage();
-      expect(document.querySelector("main")).toBeInTheDocument();
+      expect(document.querySelector<HTMLElement>("main")).toBeInTheDocument();
     });
 
     it("should have the taskrift-page class", () => {
@@ -34,17 +34,23 @@ describe("TaskriftPage", () => {
 
     it("should render the tasks menu", () => {
       renderPage();
-      expect(document.getElementById("tasks")).toBeInTheDocument();
+      expect(
+        document.querySelector<HTMLDivElement>("#tasks")
+      ).toBeInTheDocument();
     });
 
     it("should render the progress menu", () => {
       renderPage();
-      expect(document.getElementById("progress")).toBeInTheDocument();
+      expect(
+        document.querySelector<HTMLDivElement>("#progress")
+      ).toBeInTheDocument();
     });
 
     it("should render the finish menu", () => {
       renderPage();
-      expect(document.getElementById("finish")).toBeInTheDocument();
+      expect(
+        document.querySelector<HTMLDivElement>("#finish")
+      ).toBeInTheDocument();
     });
 
     it("should render the open settings button for each menu", () => {
