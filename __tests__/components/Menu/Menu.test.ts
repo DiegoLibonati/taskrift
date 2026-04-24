@@ -18,12 +18,10 @@ const renderComponent = (props: Partial<MenuProps> = {}): MenuComponent => {
 };
 
 describe("Menu", () => {
-  beforeEach(() => {
-    localStorage.clear();
-  });
-
   afterEach(() => {
     document.body.innerHTML = "";
+    localStorage.clear();
+    jest.clearAllMocks();
   });
 
   describe("rendering", () => {

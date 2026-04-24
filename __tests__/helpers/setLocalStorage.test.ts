@@ -1,8 +1,9 @@
 import { setLocalStorage } from "@/helpers/setLocalStorage";
 
 describe("setLocalStorage", () => {
-  beforeEach(() => {
+  afterEach(() => {
     localStorage.clear();
+    jest.clearAllMocks();
   });
 
   describe("when storing values", () => {

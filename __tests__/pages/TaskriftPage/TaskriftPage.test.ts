@@ -13,12 +13,10 @@ const renderPage = (): Page => {
 };
 
 describe("TaskriftPage", () => {
-  beforeEach(() => {
-    localStorage.clear();
-  });
-
   afterEach(() => {
     document.body.innerHTML = "";
+    localStorage.clear();
+    jest.restoreAllMocks();
   });
 
   describe("rendering", () => {

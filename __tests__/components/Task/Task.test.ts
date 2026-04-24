@@ -20,12 +20,10 @@ const renderComponent = (props: Partial<TaskProps> = {}): TaskComponent => {
 };
 
 describe("Task", () => {
-  beforeEach(() => {
-    localStorage.clear();
-  });
-
   afterEach(() => {
     document.body.innerHTML = "";
+    localStorage.clear();
+    jest.clearAllMocks();
   });
 
   describe("rendering", () => {

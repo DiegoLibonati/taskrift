@@ -5,8 +5,9 @@ import { getTasksFromLocalStorage } from "@/helpers/getTasksFromLocalStorage";
 import { mockTasks } from "@tests/__mocks__/tasks.mock";
 
 describe("getTasksFromLocalStorage", () => {
-  beforeEach(() => {
+  afterEach(() => {
     localStorage.clear();
+    jest.clearAllMocks();
   });
 
   describe("when localStorage has no tasks", () => {
