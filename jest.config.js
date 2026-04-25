@@ -13,6 +13,7 @@ const config = {
       "<rootDir>/__tests__/__mocks__/file.mock.ts",
     "^@/(.*)$": "<rootDir>/src/$1",
     "^@tests/(.*)$": "<rootDir>/__tests__/$1",
+    "^uuid$": "<rootDir>/__tests__/__mocks__/uuid.mock.ts",
   },
   transform: {
     "^.+\\.tsx?$": ["ts-jest", { tsconfig: "tsconfig.test.json" }],
