@@ -55,6 +55,7 @@ The application is entirely client-side, requires no login, and stores all data 
 "@testing-library/jest-dom": "^6.6.3"
 "@testing-library/user-event": "^14.5.2"
 "@types/jest": "^30.0.0"
+"@types/node": "^22.0.0"
 "@types/uuid": "^11.0.0"
 "eslint": "^9.39.2"
 "eslint-config-prettier": "^10.1.8"
