@@ -6,15 +6,6 @@ This project was created primarily for **educational and learning purposes**.
 While it is well-structured and could technically be used in production, it is **not intended for commercialization**.  
 The main goal is to explore and demonstrate best practices, patterns, and technologies in software development.
 
-## Getting Started
-
-1. Clone the repository
-2. Navigate to the project folder
-3. Execute: `npm install`
-4. Execute: `npm run dev`
-
-The application will open automatically at `http://localhost:3000`
-
 ## Description
 
 **Taskrift** is a Kanban-style task management web application built with vanilla TypeScript and no frameworks. It organizes work into three columns — **Tasks To Do**, **In Progress**, and **Finish** — giving you a clear visual overview of everything on your plate at any moment.
@@ -34,12 +25,15 @@ The application is entirely client-side, requires no login, and stores all data 
 
 ## Technologies used
 
-1. Javascript
+1. TypeScript
 2. CSS3
 3. HTML5
 4. Vite
+5. Jest
 
 ## Libraries used
+
+The project relies on a minimal runtime dependency and a set of development tools for linting, formatting, and testing.
 
 #### Dependencies
 
@@ -72,11 +66,20 @@ The application is entirely client-side, requires no login, and stores all data 
 "vite": "^7.1.6"
 ```
 
-## Portfolio Link
+## Getting Started
 
-[`https://www.diegolibonati.com.ar/#/project/taskrift`](https://www.diegolibonati.com.ar/#/project/taskrift)
+With the technology stack and dependencies in mind, follow these steps to run Taskrift locally:
+
+1. Clone the repository
+2. Navigate to the project folder
+3. Execute: `npm install`
+4. Execute: `npm run dev`
+
+The application will open automatically at `http://localhost:3000`.
 
 ## Testing
+
+Once the application is running locally, you can verify behavior by executing the test suite. Tests are written with Jest and Testing Library against a `jsdom` environment.
 
 1. Navigate to the project folder
 2. Execute: `npm test`
@@ -87,9 +90,11 @@ For coverage report:
 npm run test:coverage
 ```
 
-## Security
+## Security Audit
 
-### npm audit
+Beyond unit tests, the dependency tree should also be audited for known vulnerabilities before publishing or sharing the project.
+
+#### npm audit
 
 Check for vulnerabilities in dependencies:
 
@@ -100,3 +105,7 @@ npm audit
 ## Known Issues
 
 None at the moment.
+
+## Portfolio Link
+
+[`https://www.diegolibonati.com.ar/#/project/taskrift`](https://www.diegolibonati.com.ar/#/project/taskrift)
