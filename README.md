@@ -72,8 +72,9 @@ With the technology stack and dependencies in mind, follow these steps to run Ta
 
 1. Clone the repository
 2. Navigate to the project folder
-3. Execute: `npm install`
-4. Execute: `npm run dev`
+3. Ensure you are using **Node.js v22** (see `.nvmrc`)
+4. Execute: `npm install`
+5. Execute: `npm run dev`
 
 The application will open automatically at `http://localhost:3000`.
 

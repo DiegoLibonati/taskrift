@@ -12,6 +12,13 @@ describe("getLocalStorage", () => {
     });
   });
 
+  describe("when the stored value is invalid JSON", () => {
+    it("should return null", () => {
+      localStorage.setItem("key", "not-valid-{{{json");
+      expect(getLocalStorage("key")).toBeNull();
+    });
+  });
+
   describe("when the key exists", () => {
     it("should return the parsed string value", () => {
       localStorage.setItem("key", JSON.stringify("hello"));

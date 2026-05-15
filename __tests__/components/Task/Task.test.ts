@@ -161,6 +161,33 @@ describe("Task", () => {
         expect(element).not.toHaveClass("menu__note-list-item--line");
       });
 
+      it("should only toggle the target task when multiple tasks exist in localStorage", () => {
+        localStorage.setItem(
+          "tasks",
+          JSON.stringify([
+            {
+              id: "test-id",
+              category: "tasks",
+              text: "Sample task",
+              complete: false,
+            },
+            {
+              id: "other-id",
+              category: "tasks",
+              text: "Other task",
+              complete: false,
+            },
+          ])
+        );
+        const element = renderComponent({ complete: false });
+        fireEvent.mouseDown(element, { button: 1 });
+        const stored = JSON.parse(localStorage.getItem("tasks") ?? "[]");
+        const other = stored.find(
+          (t: { id: string; complete: boolean }) => t.id === "other-id"
+        );
+        expect(other.complete).toBe(false);
+      });
+
       it("should update localStorage with toggled complete value", () => {
         localStorage.setItem(
           "tasks",
@@ -186,6 +213,33 @@ describe("Task", () => {
         const dataTransfer = new DataTransfer();
         fireEvent.dragStart(element, { dataTransfer });
         expect(dataTransfer.getData("text")).toBe("tasks/test-id");
+      });
+    });
+
+    describe("left-click on mobile", () => {
+      it("should toggle the complete class when left-clicked on a screen narrower than 1024px", () => {
+        Object.defineProperty(window, "innerWidth", {
+          configurable: true,
+          value: 768,
+        });
+        localStorage.setItem(
+          "tasks",
+          JSON.stringify([
+            {
+              id: "test-id",
+              category: "tasks",
+              text: "Sample task",
+              complete: false,
+            },
+          ])
+        );
+        const element = renderComponent({ complete: false });
+        fireEvent.mouseDown(element, { button: 0 });
+        expect(element).toHaveClass("menu__note-list-item--line");
+        Object.defineProperty(window, "innerWidth", {
+          configurable: true,
+          value: 1024,
+        });
       });
     });
 
@@ -218,6 +272,46 @@ describe("Task", () => {
 
         const stored = JSON.parse(localStorage.getItem("tasks") ?? "[]");
         expect(stored[0].category).toBe("progress");
+      });
+
+      it("should preserve other tasks in localStorage when the dragged task changes category", () => {
+        localStorage.setItem(
+          "tasks",
+          JSON.stringify([
+            {
+              id: "test-id",
+              category: "tasks",
+              text: "Sample task",
+              complete: false,
+            },
+            {
+              id: "other-id",
+              category: "tasks",
+              text: "Other task",
+              complete: false,
+            },
+          ])
+        );
+
+        const menuDiv = document.createElement("div");
+        menuDiv.id = "progress";
+        const noteDiv = document.createElement("div");
+        const ul = document.createElement("ul");
+        const element = renderComponent();
+
+        menuDiv.appendChild(noteDiv);
+        noteDiv.appendChild(ul);
+        ul.appendChild(element);
+        document.body.appendChild(menuDiv);
+
+        fireEvent.dragEnd(element);
+
+        const stored = JSON.parse(localStorage.getItem("tasks") ?? "[]");
+        expect(stored).toHaveLength(2);
+        const other = stored.find(
+          (t: { id: string; category: string }) => t.id === "other-id"
+        );
+        expect(other.category).toBe("tasks");
       });
 
       it("should update the task element id to reflect the new category", () => {

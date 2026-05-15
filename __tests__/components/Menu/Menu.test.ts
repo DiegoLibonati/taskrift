@@ -267,6 +267,32 @@ describe("Menu", () => {
     });
 
     describe("drop", () => {
+      it("should call alert when the dropped element id results in an invalid selector", () => {
+        const mockAlert = jest.spyOn(window, "alert").mockImplementation(() => {
+          // Empty fn
+        });
+        renderComponent();
+        const tasksList = document.querySelector<HTMLUListElement>(
+          ".menu__note-list-tasks"
+        )!;
+        const dataTransfer = new DataTransfer();
+        dataTransfer.setData("text", "");
+        fireEvent.drop(tasksList, { dataTransfer });
+        expect(mockAlert).toHaveBeenCalled();
+        mockAlert.mockRestore();
+      });
+
+      it("should not modify the list when the dropped id does not match any element in the DOM", () => {
+        renderComponent();
+        const tasksList = document.querySelector<HTMLUListElement>(
+          ".menu__note-list-tasks"
+        )!;
+        const dataTransfer = new DataTransfer();
+        dataTransfer.setData("text", "tasks/nonexistent-id");
+        fireEvent.drop(tasksList, { dataTransfer });
+        expect(tasksList.children).toHaveLength(0);
+      });
+
       it("should append a dragged task element to the task list", () => {
         renderComponent();
         const taskLi = document.createElement("li");

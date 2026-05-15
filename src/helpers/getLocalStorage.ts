@@ -3,5 +3,9 @@ export const getLocalStorage = (key: string): unknown => {
 
   if (!item) return null;
 
-  return JSON.parse(item);
+  try {
+    return JSON.parse(item) as unknown;
+  } catch {
+    return null;
+  }
 };
