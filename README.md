@@ -91,6 +91,68 @@ For coverage report:
 npm run test:coverage
 ```
 
+## Continuous Integration
+
+The repository ships with a **GitHub Actions** pipeline defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml). It runs automatically on every `push` and `pull_request` targeting the `main` branch.
+
+### Pipeline overview
+
+```
+                ┌─── PR or push to main ───┐
+                ▼                          ▼
+┌──────────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│   lint-and-audit     │─▶│     testing      │─▶│      build       │
+│  eslint · tsc check  │  │  jest (jsdom)    │  │  tsc + vite build│
+└──────────────────────┘  └──────────────────┘  └──────────────────┘
+```
+
+The three jobs run sequentially: each one only starts if the previous job succeeded, so a failing lint blocks the test run and a failing test blocks the build.
+
+### Validation jobs (run on every PR and push)
+
+1. **`lint-and-audit`** — installs dependencies with `npm ci` and runs `npm run lint` (ESLint with the TypeScript ruleset) followed by `npm run type-check` (`tsc --noEmit`).
+2. **`testing`** — runs `npm run test`, executing the Jest suite against the `jsdom` environment. The 70% coverage threshold configured in `jest.config.js` is enforced here.
+3. **`build`** — runs `npm run build`, which performs a full TypeScript type-check and produces the Vite production bundle. This acts as a smoke test that the project is shippable.
+
+### Runtime details
+
+| Aspect             | Value                                                              |
+| ------------------ | ------------------------------------------------------------------ |
+| Runner image       | `ubuntu-latest`                                                    |
+| Node version       | read from [`.nvmrc`](.nvmrc) (Node.js 22)                          |
+| Dependency install | `npm ci` (uses the `npm` cache built into `actions/setup-node@v4`) |
+| Checkout action    | `actions/checkout@v4.2.2`                                          |
+
+### Where the build outputs live
+
+| Output                                           | Location                                                           |
+| ------------------------------------------------ | ------------------------------------------------------------------ |
+| Validation logs (lint, type-check, tests, build) | **Actions** tab on GitHub                                          |
+| Production bundle (`dist/`)                      | Ephemeral, inside the runner — not published as an artifact        |
+| Coverage report                                  | Generated locally with `npm run test:coverage`; not uploaded by CI |
+
+### Running the same checks locally
+
+```bash
+# lint-and-audit
+npm run lint
+npm run type-check
+
+# testing
+npm run test
+
+# build
+npm run build
+```
+
+### Skipping CI
+
+To push a change to `main` without triggering the workflow (e.g. README-only tweaks), append GitHub's standard `[skip ci]` marker to the commit message:
+
+```bash
+git commit -m "docs: fix typo in README [skip ci]"
+```
+
 ## Security Audit
 
 Beyond unit tests, the dependency tree should also be audited for known vulnerabilities before publishing or sharing the project.
